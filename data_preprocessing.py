@@ -144,7 +144,7 @@ for pos,i in enumerate(counts.keys()):
 	word_to_index[i] = pos
 
 # reverse dictionary mapping indexes to words
-index_to_word = {}s
+index_to_word = {}
 for k,v in word_to_index.items():
     index_to_word[v] = k
 

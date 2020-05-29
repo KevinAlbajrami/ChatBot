@@ -15,3 +15,9 @@ with open("C:/Users/Kevin Spiceywhinner/Desktop/TestDataset/yahoo_answers_csv/tr
     for row in csv_reader:
         if row[0] == '7':
             ds.append(row)
+
+for line in ds:
+	if(line[1].split()>19):
+		line[1]=line[1].split()(:19)
+	if(line[3].split()>19):
+		line[3]=line[1].split()(:19)

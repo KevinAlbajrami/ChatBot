@@ -18,6 +18,7 @@ import pickle
 from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
+#importing the dataset
 ds=[]
 with open("C:/Users/Kevin Spiceywhinner/Desktop/TestDataset/dataTrain.csv", 'r',encoding='utf-8') as read_obj:
 	csv_reader = reader(read_obj)
@@ -30,17 +31,22 @@ with open("C:/Users/Kevin Spiceywhinner/Desktop/TestDataset/dataTrain.csv", 'r',
 #  	if (line[2]==''):
 #  		line[2]=line[1]
 # =============================================================================
+#In this dataset teh questions are located in the clolumn 1 of each row
+#and answers are located in row
 questions_v0=[]
 answers_v0=[]
 for line in ds:
 	questions_v0.append(line[1])
 	answers_v0.append(line[3])
 
-
+#The dataset has many entries at this point so we are selecting only the first 3700
+#this is done in order to reduce the testing size for faster calculations and because it takes up
+#less ram
 answers_v0=answers_v0[:3700]
 questions_v0 = questions_v0[:3700]
 answers_v1=[]
 questions_v1=[]
+#Since our maxlength is 20, only the first 19 words of each question/answer are taken under consideration
 str=" "
 for line in answers_v0:
 	if(len(line.split())>19):
@@ -56,6 +62,7 @@ for line in questions_v0:
 	else:
 		questions_v1.append(line)
 
+#removing not important symbols and abbreviations
 def clean_text(text):
 	text=text.lower()
 	text=re.sub(r"i'm","I am",text)
@@ -79,7 +86,7 @@ def clean_text(text):
 	text=re.sub(r"[-()\"#/@;:<>{}+-=.?,|]"," ",text)
 	return text
 
-
+#Applyin the above function on each question/answer
 questions=[]
 answers=[]
 for question in questions_v1:
@@ -89,7 +96,8 @@ for question in questions_v1:
 for answer in answers_v1:
 	 answer=clean_text(answer)
 	 answers.append(answer)
-	 
+
+#more cleaning but in this case also adding some punctuation	 
 maxlen = 12
 for pos,i in enumerate(answers):
     answers[pos] = re.sub('[^a-zA-Z0-9 .,?!]', '', i)
@@ -127,18 +135,18 @@ for pos,i in enumerate(context):
 # add Beginning of Sentence (BOS) and End of Sentence (EOS) tags to the 'target' data
 final_target_v0 = ['BOS '+i+' EOS' for i in answers]
 
+#remove extra spaces that may have occurred during cleaning
 final_target_v0 = list(pd.Series(final_target_v0).map(lambda x: re.sub(' +', ' ', x)))
 context = list(pd.Series(context).map(lambda x: re.sub(' +', ' ', x)))
 
+#count all the words and assignt this count as their ID
 counts = {}
 for words in context+final_target_v0:
     for word in words.split():
         counts[word] = counts.get(word,0) + 1
 	
 
-#dict_words['BOS']=len(dict_words)+1
-#dict_words['EOS']=len(dict_words)+1
-#dict_words['<OUT>']=len(dict_words)+1
+#create a dictionary to associate each word with a specific index
 word_to_index = {}
 for pos,i in enumerate(counts.keys()):
 	word_to_index[i] = pos
@@ -150,6 +158,7 @@ for k,v in word_to_index.items():
 
 
 # apply the dictionary to the context and target data
+#this is done to convert the questions/answers to an integer sequence
 final_target = np.array([[word_to_index[w] for w in i.split()] for i in final_target_v0])
 context = np.array([[word_to_index[w] for w in i.split()] for i in context])
 print(final_target[4])

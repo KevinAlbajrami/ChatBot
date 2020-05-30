@@ -13,9 +13,9 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dropout
 from tensorflow.keras.preprocessing import sequence
 # load the data
-context = np.load('C:/Users/Kevin Spiceywhinner/Desktop/Pedro/context_indexes.npy',allow_pickle=True)
-final_target = np.load('C:/Users/Kevin Spiceywhinner/Desktop/Pedro/target_indexes.npy',allow_pickle=True)
-with open('C:/Users/Kevin Spiceywhinner/Desktop/Pedro/dictionary.pkl', 'rb') as f:
+context = np.load('insert-a-path-here/context_indexes.npy',allow_pickle=True)
+final_target = np.load('insert-a-path-here/target_indexes.npy',allow_pickle=True)
+with open('insert-a-path-here/dictionary.pkl', 'rb') as f:
     word_to_index = pickle.load(f)
 
 

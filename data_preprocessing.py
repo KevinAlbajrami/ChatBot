@@ -165,15 +165,16 @@ print(final_target[4])
 
 
  
-# save files
-np.save('C:/Users/Kevin Spiceywhinner/Desktop/Pedro/context_indexes', context)
+# save files to a directory, these files will be used later in the model.py
+#change the path part but keep the file name unchanged
+np.save('insert-a-path-here/context_indexes', context)
 
-np.save('C:/Users/Kevin Spiceywhinner/Desktop/Pedro/target_indexes', final_target)
+np.save('insert-a-path-here/target_indexes', final_target)
 
-with open('C:/Users/Kevin Spiceywhinner/Desktop/Pedro/dictionary.pkl', 'wb') as f:
+with open('insert-a-path-here/Pedro/dictionary.pkl', 'wb') as f:
     pickle.dump(word_to_index, f, pickle.HIGHEST_PROTOCOL)
 
-with open('C:/Users/Kevin Spiceywhinner/Desktop/Pedro/reverse_dictionary.pkl', 'wb') as f:
+with open('insert-a-path-here/reverse_dictionary.pkl', 'wb') as f:
     pickle.dump(index_to_word, f, pickle.HIGHEST_PROTOCOL)
 	 
 
